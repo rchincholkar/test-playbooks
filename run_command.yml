@@ -4,3 +4,7 @@
   gather_facts: true
   tasks:
     - command: '{{command}}'
+      register: last_out
+    - debug: 
+        var: last_out
+
