@@ -1,5 +1,4 @@
 ---
-
 - hosts: all
   gather_facts: true
   vars:
@@ -9,4 +8,3 @@
       register: last_out
     - debug: 
         var: last_out
-
