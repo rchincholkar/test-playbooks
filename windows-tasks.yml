@@ -39,7 +39,7 @@
     - name: Ensure user rahul is present
       win_user:
         name: rahul
-        password: rahul@1234
+        password: R@hul@123456
         state: present
         groups:
           - LinuxUser
