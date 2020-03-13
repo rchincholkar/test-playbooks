@@ -10,10 +10,10 @@
         name: git
         state: present
     
-    - name: Install notepadplusplus latest version
-      win_chocolatey:
-        name: notepadplusplus
-        version: '6.6'
+ #   - name: Install notepadplusplus latest version
+ #     win_chocolatey:
+ #       name: notepadplusplus
+ #       version: '6.6'
 
     - name: Copy a single file, but keep a backup
       win_copy:
