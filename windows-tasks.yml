@@ -13,7 +13,7 @@
     - name: Install notepadplusplus latest version
       win_chocolatey:
         name: notepadplusplus
-        version: latest
+        version: '6.6'
 
     - name: Copy a single file, but keep a backup
       win_copy:
