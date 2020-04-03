@@ -4,4 +4,4 @@
   vars:
     msg: 'helloWorld'
   tasks:
-    - debug: var=msg
+    - debug: var=msg 
