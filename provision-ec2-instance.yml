@@ -1,0 +1,77 @@
+- name: Create EC2 instances
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+  - name: gather facts for RHEL AMI images
+    ec2_ami_facts:
+      region: ap-south-1
+      owners: "309956199498"
+      filters:
+        name: "RHEL-7.5*GA*"
+    register: image_name
+
+  - name:  Set fact and filter out the RHEL ami instance id
+    set_fact:
+      rhel_ami: >
+        {{ image_name.images | selectattr('name', 'defined') | sort(attribute='creation_date') | last }}
+  - debug:
+      msg: "{{ rhel_ami.image_id }}" 
+
+  - name: Get vpc facts
+    ec2_vpc_subnet_facts:
+      region: ap-south-1
+      filters:
+        vpc-id: vpc-ce16f7a7
+    register: vpc_facts
+
+  - name: Set fact and filter out the subnet id
+    set_fact:
+      subnet_id: "{{ vpc_facts.subnets[1].id }}"  
+
+  - debug:
+      var: subnet_id
+
+  - name: Create security group
+    ec2_group:
+      name: "rahulc-ansible-ec2-sg"
+      description: sg for webapp instances
+      vpc_id: "vpc-ce16f7a7"
+      region: ap-south-1
+      rules:
+        - proto: tcp
+          ports:
+          - 443
+          - 80
+          - 22
+          cidr_ip: 0.0.0.0/0
+    register: sg_facts
+
+  - name: Create ec2 instances
+    ec2:
+      key_name: rahulc
+      instance_type: t2.micro
+      image: "{{ rhel_ami.image_id }}"
+      wait: yes
+      region: ap-south-1
+      group: rahulc-ansible-ec2-sg
+      exact_count: "{{ instance_count }}"
+      vpc_subnet_id: "{{ subnet_id }}"
+      assign_public_ip: yes
+      count_tag:
+        app: rahulc-app
+        env: tower-automated
+      instance_tags:
+        Name: rahulc-automated-instances
+        app: rahulc-app
+        env: tower-automated
+    register: ec2
+
+  - name: Wait for SSH to come up
+    wait_for: 
+      host: "{{ item.public_dns_name }}" 
+      port: 22 
+      delay: 10  
+      timeout: 300
+    with_items: "{{ ec2.instances }}"
