@@ -1,0 +1,31 @@
+---
+- hosts: localhost
+  gather_facts: false
+  connection: local
+  tasks:
+  - name: "PROVISION | Create VM from template"
+    vmware_guest:
+      validate_certs: false
+      hostname: "{{ vcenter_host }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      datacenter: "{{ datacenter }}"
+      name: "{{ name }}"
+      folder: "rahulc"
+      template: "{{ vmtemplate }}"
+      state: poweredon
+      cluster: "{{ cluster|default('homefarm_cluster') }}"
+      hardware:
+        num_cpus: "{{ cpu }}"
+        memory_mb: "{{ mem_mb }}"
+      disk:
+      - size_gb: "{{ disk }}"
+        type: thin
+        datastore: "{{ datastore }}"
+      networks:
+      - name: "{{ port_grp }}"
+      wait_for_ip_address: yes
+    register: dyn_vm
+
+  - debug:
+      msg: "{{ dyn_vm }}"
