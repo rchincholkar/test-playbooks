@@ -1,0 +1,36 @@
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: Set timezone to 'India Standard Time' (GMT+05:30)
+      win_timezone:
+        timezone: India Standard Time
+    
+    - name: Install git
+      win_chocolatey:
+        name: git
+        state: present
+   
+    
+    - name: Find files with .log and .out extension using powershell wildcards
+      win_find:
+        paths: C:\Temp
+        patterns: rahul.txt
+    
+    - name: Adding new line in rahul.txt
+      win_lineinfile:
+        path: C:\Temp\rahul.txt
+        line: 'New line from playbook run'
+    
+    - name: Create a new group
+      win_group:
+        name: LinuxUser
+        description: Linux Group
+        state: present
+    
+    - name: Ensure user rahul is present
+      win_user:
+        name: rahul
+        password: R@hul@123456
+        state: present
+        groups:
+          - LinuxUser
