@@ -1,0 +1,22 @@
+---
+- hosts: all
+  tasks:
+    - name: make sure there is newbie user
+      user: name=newbie uid=4000 state=present
+      register: user_output
+
+    - debug: var=user_output.name
+    
+    - name: sshd and mariadb is running
+      service: name=sshd.service state=started enabled=true
+    
+    - name: upgrade all packages
+      yum:
+        name: '*'
+        state: latest
+
+    - name: create /home/images directory
+      file:
+        path: /home/images
+        state: directory
+        mode: 0755
