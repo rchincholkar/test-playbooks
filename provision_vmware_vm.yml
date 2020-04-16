@@ -24,7 +24,6 @@
         datastore: "{{ datastore }}"
       networks:
       - name: "{{ port_grp }}"
-      wait_for_ip_address: yes
     register: dyn_vm
 
   - debug:
