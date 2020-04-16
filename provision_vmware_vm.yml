@@ -11,7 +11,7 @@
       password: "{{ vcenter_password }}"
       datacenter: "{{ datacenter }}"
       name: "{{ name }}"
-      folder: "rahulc"
+      folder: "{{ folder_name }}"
       template: "{{ vmtemplate }}"
       state: poweredon
       cluster: "{{ cluster|default('homefarm_cluster') }}"
