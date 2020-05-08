@@ -6,6 +6,9 @@
 192.168.1.10
 192.168.1.11
 
+[PROD-VMS]
+10.0.0.10
+10.0.0.12
 
 [everything:children]
 windows
