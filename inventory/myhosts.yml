@@ -6,6 +6,6 @@
 3.3.3.3
 4.4.4.4
 
-[allnodes:children]
+[BigGroup:children]
 windows
 linux
