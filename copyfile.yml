@@ -1,0 +1,7 @@
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: Copy a file
+      copy:
+        src: /tmp/testfile_source
+        dest: /tmp/testfile_dest
