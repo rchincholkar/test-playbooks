@@ -4,4 +4,4 @@
     - name: Copy a file
       copy:
         src: /tmp/testfile_source
-        dest: /tmp/testfile_dest
+        dest: /etc/testfile_dest
