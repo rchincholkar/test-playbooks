@@ -1,7 +1,4 @@
 - hosts: all
   gather_facts: false
-  tasks:
-    - name: Copy a file
-      copy:
-        src: /tmp/testfile_source
-        dest: /etc/testfile_dest
+  - roles:
+      - role: copyfile
