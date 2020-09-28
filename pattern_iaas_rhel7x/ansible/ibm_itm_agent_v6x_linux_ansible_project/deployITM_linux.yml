@@ -1,0 +1,10 @@
+---
+- hosts: all
+  gather_facts: true
+  vars:
+    command: whoami
+  tasks:
+    - command: '{{command}}'
+      register: last_out
+    - debug: 
+        var: last_out
