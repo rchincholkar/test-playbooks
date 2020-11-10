@@ -1,5 +1,5 @@
 - hosts: all
   gather_facts: false
-  serial: {{ serial }}
+  serial: "{{ serial }}"
   roles:
     - copyfile
