@@ -3,4 +3,8 @@
   copy:
     src: testfile.txt
     dest: /tmp/testfile.txt
+    
+- name: stats of the file
+  stat:
+    path: /tmp/testfile.txt
 
