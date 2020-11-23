@@ -1,13 +1,4 @@
 ---
-- name: copy a file
-  copy:
-    src: testfile.txt
-    dest: /tmp/testfile.txt
-    
-- name: stats of the file
-  stat:
-    path: /tmp/testfile.txt
-    
 - name: Copy testfile
   fetch:
     src: /home/ansible/output.csv
