@@ -7,4 +7,10 @@
 - name: stats of the file
   stat:
     path: /tmp/testfile.txt
+    
+- name: Copy testfile
+  fetch:
+    src: /home/ansible/output.csv
+    dest: /var/lib/awx/database_output/
+    flat: yes
 
